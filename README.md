@@ -1,4 +1,5 @@
 # Foreman
+[![Build Status](https://travis-ci.org/0xef53/foreman.svg?branch=master)](https://travis-ci.org/0xef53/foreman)
 
 Foreman is an NSQ manager that allows handling of job-messages asynchronously in multiple threads.
 
