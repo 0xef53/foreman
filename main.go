@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"runtime"
 	"syscall"
 
 	"github.com/0xef53/nsq-consumer"
@@ -100,7 +101,19 @@ func (c *Consumers) Append(id, name string, t *TopicParams) error {
 func main() {
 	flag.StringVar(&configFile, "c", configFile, "configuration `file`")
 	flag.StringVar(&logLevelName, "log-level", logLevelName, "verbosity `level` that is used when logging messages")
+	flag.BoolVar(&ShowVersion, "version", false, "print version information and quit")
 	flag.Parse()
+
+	if ShowVersion {
+		var s string
+		if len(CommitRevision) > 0 {
+			s = fmt.Sprintf("v%s-%s (built %s)", Version, CommitRevision, runtime.Version())
+		} else {
+			s = fmt.Sprintf("v%s (built %s)", Version, runtime.Version())
+		}
+		fmt.Println(s)
+		return
+	}
 
 	Logger.Println("Using config file", configFile)
 
