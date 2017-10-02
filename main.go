@@ -107,9 +107,9 @@ func main() {
 	if ShowVersion {
 		var s string
 		if len(CommitRevision) > 0 {
-			s = fmt.Sprintf("v%s-%s (built %s)", Version, CommitRevision, runtime.Version())
+			s = fmt.Sprintf("v%s-%s (built w/%s)", Version, CommitRevision, runtime.Version())
 		} else {
-			s = fmt.Sprintf("v%s (built %s)", Version, runtime.Version())
+			s = fmt.Sprintf("v%s (built w/%s)", Version, runtime.Version())
 		}
 		fmt.Println(s)
 		return
