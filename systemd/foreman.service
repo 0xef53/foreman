@@ -1,0 +1,12 @@
+[Unit]
+Description=An NSQ job manager and runner
+Documentation=https://github.com/0xef53/foreman
+ConditionFileNotEmpty=/etc/foreman/foreman.conf
+
+[Service]
+Restart=always
+RestartSec=0.5
+ExecStart=/usr/bin/foreman -c /etc/foreman/foreman.conf --log-level ERROR
+
+[Install]
+WantedBy=multi-user.target
