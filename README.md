@@ -47,6 +47,11 @@ Configuration file has the following structure:
   ; Custom channel name. It overrides the value from the "common" section.
   channel = "foobar_foreman"
 
+  ; Env specifies the environment of the worker command and all hooks.
+  ; Each entry is of the form "key=value".
+  env = "LANG=c"
+  env = "DEBUG=yes"
+
   ; Directory with worker script and notify hooks.
   workdir = "/opt/foreman-workers"
 

@@ -23,10 +23,11 @@ type TopicParams struct {
 	Workdir      string
 	Cmd          string
 	Concurrency  int
-	MaxAttempts  int    `gcfg:"max-attempts"`
-	NotifyStart  string `gcfg:"notify-start"`
-	NotifyFinish string `gcfg:"notify-finish"`
-	NotifyFault  string `gcfg:"notify-fault"`
+	Envs         []string `gcfg:"env"`
+	MaxAttempts  int      `gcfg:"max-attempts"`
+	NotifyStart  string   `gcfg:"notify-start"`
+	NotifyFinish string   `gcfg:"notify-finish"`
+	NotifyFault  string   `gcfg:"notify-fault"`
 }
 
 // ForemanConfig represents the Foreman configuration.

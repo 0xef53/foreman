@@ -61,19 +61,19 @@ func (c *Consumers) Append(id, name string, t *TopicParams) error {
 		// Notification of the start
 		if len(t.NotifyStart) > 0 && msg.Attempts == 1 {
 			Logger.Println(prefix, "notify-start command:", t.NotifyStart)
-			if exitCode, err := executeCommand(t.NotifyStart, prefix, data, msg); err != nil {
+			if exitCode, err := executeCommand(t.NotifyStart, prefix, data, msg, t.Envs); err != nil {
 				data["_notify_start_exit_code"] = exitCode
 				Logger.Println(prefix, "notify-start error:", err)
 			}
 		}
 
 		// Executing a main worker command
-		switch exitCode, err := executeCommand(t.Cmd, prefix, data, msg); {
+		switch exitCode, err := executeCommand(t.Cmd, prefix, data, msg, t.Envs); {
 		case err == nil:
 			// Notification of successful completion
 			if len(t.NotifyFinish) > 0 {
 				Logger.Println(prefix, "notify-finish command:", t.NotifyFinish)
-				if _, err := executeCommand(t.NotifyFinish, prefix, data, msg); err != nil {
+				if _, err := executeCommand(t.NotifyFinish, prefix, data, msg, t.Envs); err != nil {
 					Logger.Println(prefix, "notify-finish error:", err)
 				}
 			}
@@ -86,7 +86,7 @@ func (c *Consumers) Append(id, name string, t *TopicParams) error {
 			// Notification of fault completion
 			if len(t.NotifyFault) > 0 {
 				Logger.Println(prefix, "notify-fault command:", t.NotifyFault)
-				if _, err := executeCommand(t.NotifyFault, prefix, data, msg); err != nil {
+				if _, err := executeCommand(t.NotifyFault, prefix, data, msg, t.Envs); err != nil {
 					Logger.Println(prefix, "notify-fault error:", err)
 				}
 			}

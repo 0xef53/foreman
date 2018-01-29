@@ -47,7 +47,7 @@ func byLineCopy(prefix string, sink io.Writer, pipe io.Reader) {
 // merges them and trying to execute a resulting command.
 //
 // A payload data is also passed to the stdin of the executing command.
-func executeCommand(cmdTpl, prefix string, data map[string]interface{}, msg *nsq.Message) (int, error) {
+func executeCommand(cmdTpl, prefix string, data map[string]interface{}, msg *nsq.Message, envs []string) (int, error) {
 	t := template.Must(template.New("cmd").Parse(cmdTpl))
 	var cmdB bytes.Buffer
 	if err := t.Execute(&cmdB, data); err != nil {
@@ -70,6 +70,8 @@ func executeCommand(cmdTpl, prefix string, data map[string]interface{}, msg *nsq
 
 	go byLineCopy(prefix, os.Stdout, stdoutPipe)
 	go byLineCopy(prefix, os.Stderr, stderrPipe)
+
+	cmd.Env = append(os.Environ(), envs...)
 
 	if err := cmd.Start(); err != nil {
 		return -1, err
